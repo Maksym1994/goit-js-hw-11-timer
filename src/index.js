@@ -11,13 +11,21 @@ class CountdownTimer {
   constructor(selector, targetDate) {
     this.elem = document.querySelector(selector);
     this.targetDate = targetDate;
+    this.isActive = false;
   }
     intervalId = setInterval(() => {
-    const startTime = Date.now();
-    let deltaTime = this.targetDate - startTime;
-    this.updateClock(deltaTime);
+  
+      const startTime = Date.now();
+      let deltaTime = this.targetDate - startTime;
+      this.updateClock(deltaTime);
+
+      if (deltaTime < 1000) {
+        clearInterval(this.intervalId);
+        this.intervalId = null;
+      };
+      
     }, refs.secsSpan);
-    
+
   updateClock(time) {
     const pad = this.pad;
     
@@ -39,5 +47,7 @@ class CountdownTimer {
 
 new CountdownTimer(...Object.values({
   selector: "#timer-1",
-  targetDate: new Date("Jul 21, 2021"),
+  targetDate: new Date("Jul 17, 2021 12:22:00"),
 }));
+
+
